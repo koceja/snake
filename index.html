@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Daniel Koceja's Snake</title>
+        <style>
+            body {
+                text-align: center;
+                font-family: "Courier New", Courier, monospace;
+                background-color: black;
+                color: white;
+            }
+            #game {
+                border: 1px solid white;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <h1 id="header">
+                snake
+            </h1>
+            <canvas id="game">
+    
+            </canvas>
+            <div id="scoreboard">
+                <p id="score">size: <span id="size">5</span></p>
+            </div>
+        </div>
+        
+        <script src="game.js">
+
+        </script>
+        <noscript>
+            <style type="text/css">
+                #container {display:none;}
+            </style>
+            <div class="noscriptmsg">
+                <h1>You don't have javascript enabled. Please enable javascript to play this game.</h1>
+            </div>
+        </noscript>
+    </body>
+</html>
