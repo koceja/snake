@@ -1,18 +1,15 @@
 const express = require('express');
+const path = require('path')
 const app = express();
 
-var bodyParser = require('body-parser')
 
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-})); 
-
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'public'));
+app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    res.send('Connected');
+    res.render('index');
 });
 
 
-app.listen(3000, () => console.log('Listening on port 3000...'));
+app.listen(process.env.PORT || 3000, () => console.log('Listening on port 3000...'));
