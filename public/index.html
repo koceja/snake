@@ -27,7 +27,6 @@
             body {
                 text-align: center;
                 font-family: 'Roboto', sans-serif;
-                background-color: #b8b8b8;
                 color: black;
                 
             }
@@ -55,6 +54,10 @@
                 width: 30%;
                 margin-left: 60%;
                 margin-right: 10%;
+            }
+
+            .list-group-item {
+                background-color: #3d454d !important;
             }
 
             @media screen and (max-width: 845px) {
@@ -90,15 +93,14 @@
                     </div>
                 </div>
                 <div id="leaderboard">
-                    <div class="card">
+                    <div class="card text-white bg-dark">
                         <div class="card-header">
                           Highscores
                         </div>
                         <ul class="list-group list-group-flush">
                           
                         </ul>
-                      </div>
-                      
+                    </div>
                 </div>
                 
                 
@@ -111,9 +113,7 @@
 
         </div>
         
-        <script src="game.js">
-
-        </script>
+        
         <noscript>
             <style type="text/css">
                 #container {display:none;}
@@ -123,4 +123,17 @@
             </div>
         </noscript>
     </body>
+    <script src='https://unpkg.com/trianglify@^4/dist/trianglify.bundle.js'></script>
+    <script>
+      const pattern = trianglify({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      })
+      var elem = pattern.toCanvas();
+      elem.style.cssText = 'position:fixed;top:0px;left:0px;z-index:-100';
+      document.body.appendChild(elem);
+    </script>
+    <script src="game.js">
+
+    </script>
 </html>
