@@ -2,7 +2,41 @@ var canvas;
 var ctx;
 
 
+var leaderboard = [null, null, null, null, null, null, null, null, null, null];
+
+function setCookie() {
+
+    var cookie = ""
+    for (var i = 0; i < leaderboard.length; i++) {
+            cookie += i + "=" + leaderboard[i] + ";"
+    }
+    var d = new Date();
+    d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+
+    document.cookie = cookie + expires;
+  }
+
+function readCookie() {
+    var allcookies = document.cookie;
+    if (allcookies.length === 0) {
+        return;
+    }
+    // Get all the cookies pairs in an array
+    cookiearray = allcookies.split(';');
+               
+               // Now take key value pair out of this array
+               for(var i = 0; i < cookiearray.length - 1; i++) {
+                  number = cookiearray[i].split('=')[0].parseInt();
+                  score = cookiearray[i].split('=')[1].parseInt();
+                  leaderboard[number] = score;
+               }
+}
+
+
 window.onload = () => {
+    readCookie();
+    initLeaderboard();
     canvas = document.getElementById("game");
     ctx = canvas.getContext("2d");
     canvas.width = 400;
@@ -11,6 +45,18 @@ window.onload = () => {
     init();
     setInterval(game, 1000/12)
 };
+
+
+function initLeaderboard() {
+    var inner = "";
+    for (var i = 0; i < leaderboard.length; i++) {
+        if (leaderboard[i] === null) {
+            break;
+        }
+        inner += "<li class='list-group-item'>" + leaderboard[i] + "</li>";
+    }
+    $(".list-group").html(inner);
+}
 
 var rows;
 var cols;
@@ -33,8 +79,8 @@ function init() {
     rows = 20;
     cols = 20;
 
-    x = 4;
-    y = 4;
+    x = 10;
+    y = 10;
 
     xv = 0;
     yv = 0;
@@ -90,22 +136,26 @@ function game() {
 
     x += xv;
     if (x < 0) {
-        x = rows - 1;
+        wallLose();
+        return;
     } else if (x >= rows) {
-        x = 0;
+        wallLose();
+        return;
     }
 
     y += yv;
     if (y < 0) {
-        y = cols - 1;
+        wallLose();
+        return;
     } else if (y >= cols) {
-        y = 0;
+        wallLose();
+        return;
     }
 
     for (var i = 0; i < trail.length; i++) {
         if (trail[i] != null) {
             if (trail[i].x == x && trail[i].y == y) {
-                reset();
+                trailLose();
                 return;
             }
         }
@@ -134,24 +184,54 @@ function game() {
     
 }
 
-function reset() {
+function wallLose() {
 
+}
+
+function wallLose() {
+    reset();
+    ctx.font = "18px Courier New";
+    ctx.fillStyle = "white";
+    ctx.fillText("You ran into a wall.", 20, 180);
+    ctx.fillText("Use the arrow keys to restart...", 20, 200);
+}
+
+function trailLose() {
+    reset();
+    ctx.font = "18px Courier New";
+    ctx.fillStyle = "white";
+    ctx.fillText("You ran into yourself.", 20, 180);
+    ctx.fillText("Use the arrow keys to restart...", 20, 200);
+}
+
+function reset() {
+    for (var i = 0; i < leaderboard.length; i++) {
+        if (leaderboard[i] < size) {
+            var temp = leaderboard[i];
+            leaderboard[i] = size;
+            for (var j = i + 1; j < leaderboard.length; j++) {
+                var temp2 = leaderboard[j]
+                leaderboard[j] = temp;
+                temp = temp2;
+            }
+            break;
+        }
+    }
+    initLeaderboard();
+    setCookie();
     size = 5;
     visibleSize = 1;
-    x = 4;
-    y= 4;
+    x = 10;
+    y= 10;
     trail = [null, null, null, null]
     xv = 0;
     yv = 0;
     generateNewApple();
 
     ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.font = "18px Courier New";
-        ctx.fillStyle = "white";
-        ctx.fillText("You ran into yourself.", 20, 180);
-        ctx.fillText("Use the arrow keys to restart...", 20, 200);
+        
 
 }
 
@@ -176,6 +256,7 @@ function endGame() {
 }
 
 function getInput(e) {
+    e.preventDefault();
     inputQueue.push(e);
 }
 
