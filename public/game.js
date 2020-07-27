@@ -44,8 +44,8 @@ window.onload = () => {
   initLeaderboard();
   canvas = document.getElementById("game");
   ctx = canvas.getContext("2d");
-  canvas.width = 400;
-  canvas.height = 400;
+  canvas.width = 600;
+  canvas.height = 600;
   document.addEventListener("keydown", getInput);
   init();
   setInterval(game, 1000 / 12);
@@ -57,10 +57,10 @@ function initLeaderboard() {
     if (leaderboard[i] === null || leaderboard[i] === 0) {
       break;
     }
-    inner += "<li class='list-group-item'>" + leaderboard[i] + "</li>";
+    inner += "<li class='score-item'>" + leaderboard[i] + "</li>";
   }
 
-  $(".list-group").html(inner);
+  $("#scores").html(inner);
 }
 
 var rows;
@@ -81,8 +81,8 @@ var size;
 var visibleSize;
 
 function init() {
-  rows = 20;
-  cols = 20;
+  rows = 30;
+  cols = 30;
 
   x = 10;
   y = 10;
@@ -248,7 +248,7 @@ function endGame() {
   ctx.fillText("Use the arrow keys to restart...", 20, 200);
 }
 
-function getInput(e) {
+async function getInput(e) {
   e.preventDefault();
   inputQueue.push(e);
 }

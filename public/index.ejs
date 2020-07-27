@@ -27,7 +27,12 @@
             body {
                 text-align: center;
                 font-family: 'Roboto', sans-serif;
-                color: black;
+                color: white;
+                background:
+                radial-gradient(circle at 100% 50%, transparent 20%, rgba(255,255,255,.3) 21%, rgba(255,255,255,.3) 34%, transparent 35%, transparent),
+                radial-gradient(circle at 0% 50%, transparent 20%, rgba(255,255,255,.3) 21%, rgba(255,255,255,.3) 34%, transparent 35%, transparent) 0 -50px;
+                background-color: rgb(90, 90, 199);
+                background-size:75px 100px;
                 
             }
 
@@ -35,52 +40,69 @@
                 margin-top: 25px;
                 margin-bottom: 25px;
             }
+
+            #wrapper {
+                margin: auto;
+                width: 800px;
+                box-shadow: 5px 5px 10px black;
+            }
             
             #game-wrapper {
                 margin-right: auto;
-                width: 400px;
+                width: 600px;
                 float: left;
                 
-                margin-left: 10%;
+                margin-left: 0px;
             }
             #game {
                 border: 0.5px solid #6d6d6d;
-                box-shadow: 5px 5px 10px black;
                 display: block;
             }
             #leaderboard {
-
-                height: auto;
-                width: 30%;
-                margin-left: 60%;
-                margin-right: 10%;
+                position: relative;
+                height: 602px;
+                width: 200px;
+                margin-left: 600px;
+                margin-right: 0px;
+                background-color: #3d454d;
+                border: 0.5px solid #6d6d6d;
             }
 
-            .list-group-item {
+            .card {
+                border: 0px !important;
+                
+            }
+
+            #scores {
+                display: flex;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                list-style-type: none;
+                padding: 2px;
+                background-color: #3d454d;
+            }
+
+            .score-item {
                 background-color: #3d454d !important;
+                border: 0px !important;
+                width: 100%;
+                padding-top: 10px;
+                padding-bottom: 10px;
             }
 
-            @media screen and (max-width: 845px) {
-                #leaderboard {
-                    margin: auto;
-                    width: 400px;
-                    margin-bottom: 50px;
-                }
-
-                #game-wrapper {
-                    float: none;
-                    width: 400px;
-                    margin: auto;
-                }
+            #score {
+                position: absolute;
+                bottom: 10px;
+                width: 100%;
+                text-align: center;
             }
-
 
         </style>
     </head>
     <body>
         <div id="container">
             <h1 id="header">
-                snake
+                SNAKE
             </h1>
             <div id="wrapper">
                 <div id="game-wrapper">
@@ -89,17 +111,18 @@
                     </canvas>
                     <div id="scoreboard">
                         <p></p>
-                        <p id="score">size: <span id="size">5</span></p>
+                        
                     </div>
                 </div>
                 <div id="leaderboard">
-                    <div class="card text-white bg-dark">
+                    <div class="text-white bg-dark">
                         <div class="card-header">
-                          Highscores
+                          HIGH-SCORES
                         </div>
-                        <ul class="list-group list-group-flush">
+                        <ul id="scores">
                           
                         </ul>
+                        <p id="score">size: <span id="size">5</span></p>
                     </div>
                 </div>
                 
@@ -123,7 +146,7 @@
             </div>
         </noscript>
     </body>
-    <script src='https://unpkg.com/trianglify@^4/dist/trianglify.bundle.js'></script>
+    <!-- <script src='https://unpkg.com/trianglify@^4/dist/trianglify.bundle.js'></script>
     <script>
       const pattern = trianglify({
         width: window.innerWidth,
@@ -132,7 +155,7 @@
       var elem = pattern.toCanvas();
       elem.style.cssText = 'position:fixed;top:0px;left:0px;z-index:-100';
       document.body.appendChild(elem);
-    </script>
+    </script> -->
     <script src="game.js">
 
     </script>
